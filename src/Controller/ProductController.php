@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Kernel\Config;
 use App\Kernel\Controller\BaseController;
 use App\Model\Category;
 use App\Model\Image;
@@ -21,7 +22,7 @@ class ProductController extends BaseController
         $this->render('Product/product', [
             'user' => $_SESSION['user']['email'] ?? null,
             'namePage' => pathinfo($_SERVER['SCRIPT_FILENAME'])['filename'],
-            'navigation' => include __DIR__ . '/../../app/config/navigation.php',
+            'navigation' => Config::getNavigation(),
             'categories' => Category::findAll(),
             'product' => Product::findById($id),
             'images' => Image::findByProductId($id),

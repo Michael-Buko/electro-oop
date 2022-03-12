@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Kernel\Config;
 use App\Kernel\Controller\BaseController;
 use App\Model\Category;
 use App\Model\Product;
@@ -18,9 +19,9 @@ class HomeController extends BaseController
         }
 
         $this->render('Home/index', [
-            'user' => $_SESSION['user']['email'] ?? null,
+            'user' => $_SESSION['user']['email'] ?? null, // переделать
             'namePage' => pathinfo($_SERVER['SCRIPT_FILENAME'])['filename'],
-            'navigation' => include __DIR__ . '/../../app/config/navigation.php',
+            'navigation' => Config::getNavigation(),
             'categories' => Category::findAll(),
             'products' => Product::findAllJoin(),
 
@@ -46,14 +47,14 @@ class HomeController extends BaseController
 
         $this->render('Home/login', [
             'errorMessage' => $error ?? '',
-            'navigation' => include __DIR__ . '/../../app/config/navigation.php',
+            'navigation' => Config::getNavigation(),
         ]);
     }
 
     public function errorAction(): void
     {
         $this->render('Home/error',[
-            'navigation' => include __DIR__ . '/../../app/config/navigation.php',
+            'navigation' => Config::getNavigation(),
         ]);
     }
 

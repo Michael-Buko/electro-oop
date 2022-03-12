@@ -5,20 +5,15 @@ namespace App\Kernel;
 
 class DBConnection
 {
-    private const DB_HOST = 'localhost';
-    private const DB_PORT = '3306';
-    private const DB_USER = 'homestead';
-    private const DB_PASSWORD = 'secret';
-    private const DB_NAME = 'electro';
-
     private \PDO $connection;
 
     public function __construct()
     {
+        $config = Config::getDbSettings();
         $this->connection = new \PDO(
-            sprintf('mysql:dbname=%s;host=%s;port=%s', self::DB_NAME, self::DB_HOST, self::DB_PORT),
-            self::DB_USER,
-            self::DB_PASSWORD
+            sprintf('mysql:dbname=%s;host=%s;port=%s', $config['name'], $config['host'], $config['port']),
+            $config['user'],
+            $config['password']
         );
     }
 
