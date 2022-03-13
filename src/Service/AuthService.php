@@ -9,28 +9,53 @@ use App\Model\User;
 
 class AuthService
 {
-    public function login(string $email, string $password): void
+    public static function login(): void
     {
-        $user = User::findByEmail($email);
-
-        if ($user->getPassword() === md5($password)) {
-            SessionService::sessionStart($user->getEmail(), Role::findById($user->getRoleId())->getRole());
-        } else {
-            throw new UserNotFoundException('Неверный логин или пароль');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $user = User::findByEmail($email);
+            if ($user->getPassword() === md5($password)) {
+                SessionService::add([
+                    'email' => $user->getEmail(),
+                    'role' => Role::findById($user->getRoleId())->getRole(),
+                ]);
+            } else {
+                throw new UserNotFoundException('Неверный логин или пароль');
+            }
         }
     }
 
-    public function isAuth(?array $session): bool
+    public static function isAuthorized(): bool
     {
-        if (!empty($session)) {
+        if (!empty($_SESSION['user'] ?? null)) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function logout(): void
+    public static function getEmail(): string|null
+    {
+        if (!empty($_SESSION['user']['email'] ?? null)) {
+            return $_SESSION['user']['email'];
+        } else {
+            return null;
+        }
+    }
+
+    public static function getRole(): string|null
+    {
+        if (!empty($_SESSION['user']['role'] ?? null)) {
+            return $_SESSION['user']['role'];
+        } else {
+            return null;
+        }
+    }
+
+    public static function logout(): void
     {
         SessionService::sessionDestroy();
+        header('Location: /index');
     }
 }

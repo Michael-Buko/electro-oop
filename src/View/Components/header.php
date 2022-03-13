@@ -49,7 +49,7 @@
                 <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
                 <?php if (!empty($_SESSION['user'])): ?>
                     <li><a href="#"><i class="fa fa-user-o"></i> <?= $user ?></a></li>
-                    <li><a href="<?= $namePage . '?action=logout' ?>"><i class="fa fa-user-o"></i> Logout</a></li>
+                    <li><a href="<?= '/logout' ?>"><i class="fa fa-user-o"></i> Logout</a></li>
                 <?php else: ?>
                     <li><a href="/login"><i class="fa fa-user-o"></i> Login</a></li>
                 <?php endif; ?>

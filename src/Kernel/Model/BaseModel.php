@@ -32,7 +32,7 @@ abstract class BaseModel
         );
     }
 
-    public static function findById(int $id): static
+    public static function findById(int $id): static|bool
     {
         $connection = new DBConnection();
         $data = $connection->query(
