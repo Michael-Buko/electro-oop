@@ -13,15 +13,8 @@ class ProductController extends BaseController
 {
     public function productAction(int $id): void
     {
-        $auth = new AuthService;
-        if (!empty($_GET['action']) && 'GET' === $_SERVER['REQUEST_METHOD'] && $_GET['action'] === 'logout') {
-            $auth->logout();
-            header('Location: /index');
-        }
-
         $this->render('Product/product', [
-            'user' => $_SESSION['user']['email'] ?? null,
-            'namePage' => pathinfo($_SERVER['SCRIPT_FILENAME'])['filename'],
+            'user' => AuthService::getEmail(),
             'navigation' => Config::getNavigation(),
             'categories' => Category::findAll(),
             'product' => Product::findById($id),

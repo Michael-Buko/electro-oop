@@ -27,6 +27,7 @@ return [
         '/' => [HomeController::class, 'indexAction'],
         '/index' => [HomeController::class, 'indexAction'],
         '/login' => [HomeController::class, 'loginAction'],
+        '/logout' => [HomeController::class, 'logoutAction'],
         '/error' => [HomeController::class, 'errorAction'],
         '/product/(?P<id>.+)' => [ProductController::class, 'productAction'],
     ],

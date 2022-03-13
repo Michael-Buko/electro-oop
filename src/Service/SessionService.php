@@ -4,10 +4,14 @@ namespace App\Service;
 
 class SessionService
 {
-    public static function sessionStart(string $email, string $role)
+    public static function start(): void
     {
         session_start();
-        $_SESSION['user'] = ['email' => $email, 'role' => $role];
+    }
+
+    public static function add(array $parameters)
+    {
+        $_SESSION['user'] = $parameters;
     }
 
     public static function sessionDestroy()

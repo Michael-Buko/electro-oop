@@ -65,6 +65,7 @@ class User extends BaseModel
             sprintf("SELECT * FROM user WHERE email='%s'", $email),
             static::class
         );
+        $user = current($user);
 
         if (!($user instanceof User)) {
             throw new UserNotFoundException('Неверный логин или пароль');
